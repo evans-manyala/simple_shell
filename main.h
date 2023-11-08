@@ -14,7 +14,7 @@
 #include <signal.h>
 
 /**
- * struct data - Structure for the program data
+ * struct data_struct - Structure for the program data
  * @prg: Name of the executable application file.
  * @input: A pointer to the input to be read from the terminal.
  * @cmd_name: Pointer to the  commands typed from the terminal.
@@ -26,7 +26,7 @@
  * @alias: Pointer arrays for aliases.
  */
 
-typedef struct data
+typedef struct data_struct
 {
 	char *prg;
 	char *input;
@@ -38,6 +38,16 @@ typedef struct data
 	char **alias;
 };
 
+/**
+ * struct in_built - Strucutre for in_built shell arguments to be passed.
+ * @in_b: Name for inbuilt arguments.
+ * @fn: Function to be called by each inbuilt arguments within the program.
+ */
+typedef struct in_built
+{
+	char *in_b;
+	int (*fn)(data_struct *d);
+};
 
 
 #endif /* MAIN_H */
