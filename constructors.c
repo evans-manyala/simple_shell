@@ -57,19 +57,22 @@ struct func *backfunc(struct func *subfunc)
 /**
  * parse_func - Parses a shell command & constructs a corresponding func struct
  * @s: The input string containing the shell command
- * @es: The end of the input string
  * Return: A pointer to the parsed func struct
  */
-struct func *parse_func(char *s, char *es)
+struct func *parse_func(char *s)
 {
 	struct func *func;
+	char *es;
 
+	es = s + strlen(s);
 	func = parseline(&s, es);
+	peek(&s, es, "");
+
 	if (s != es)
 	{
-		printf("Invalid command: %s\n", s);
+		printf("leftovers: %s\n", s);
 		panicerror("syntax");
 	}
 	nulterminate(func);
-	return (func);
+	return ((struct func *)func);
 }
