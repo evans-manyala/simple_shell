@@ -36,7 +36,7 @@ extern char **environ; /* For environment variable 'env' */
  */
 struct func
 {
-        int type;
+	int type;
 };
 
 /**
@@ -50,8 +50,8 @@ struct func
  */
 struct execfunc
 {
-        int type;
-        char *argv[MAXARGS], *eargv[MAXARGS];
+	int type;
+	char *argv[MAXARGS], *eargv[MAXARGS];
 };
 
 /**
@@ -63,9 +63,9 @@ struct execfunc
  */
 struct listfunc
 {
-        int type;
-        struct func *left;
-        struct func *right;
+	int type;
+	struct func *left;
+	struct func *right;
 };
 
 /**
@@ -78,8 +78,8 @@ struct listfunc
  */
 struct backfunc
 {
-        int type;
-        struct func *func;
+	int type;
+	struct func *func;
 };
 
 /*Function prototypes here: */
