@@ -1,6 +1,6 @@
 0x16. C - Simple Shell
 
-Welecome to this ALX SE Learning end of Sprint 1 Project. Here we are taught to learn and then do hard things 💪
+Welcome to this ALX SE Learning end of Sprint 1 Project. Here we are taught to learn and then do hard things 💪
 
 Features
 
