@@ -13,7 +13,7 @@ struct func *execfunc(void)
 		panicerror("malloc failed");
 	memset(func, 0, sizeof(struct execfunc));
 	func->type = EXEC;
-	return (func);
+	return ((struct func *)func);
 }
 
 /**
@@ -33,7 +33,7 @@ struct func *listfunc(struct func *left, struct func *right)
 	func->type = LIST;
 	func->left = left;
 	func->right = right;
-	return (func);
+	return ((struct func *)func);
 }
 
 /**
@@ -51,7 +51,7 @@ struct func *backfunc(struct func *subfunc)
 	memset(func, 0, sizeof(struct backfunc));
 	func->type = BACK;
 	func->func = subfunc;
-	return (func);
+	return ((struct func *)func);
 }
 
 /**
