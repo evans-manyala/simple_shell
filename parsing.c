@@ -4,20 +4,8 @@ struct func *parseline(char **ps, char *es);
 struct func *parseexec(char **ps, char *es);
 struct func *parseblock(char **ps, char *es);
 
-/**
- * is_whitespace_or_symbol - Function checks for whitespace or symbols.
- * @c: Character to be tested.
- * Return: If whitespace or symbol.
- *
- * Description: Checks whether the given character (c)
-*/
-int is_whitespace_or_symbol(char c)
-{
-	static const char whitespace[] = " \t\r\n\v";
-	static const char symbols[] = "<|>&;()";
-
-	return (strchr(whitespace, c) || strchr(symbols, c));
-}
+static const char whitespace[] = " \t\r\n\v";
+static const char symbols[] = "<|>&;()";
 
 /**
  * gettoken - Retrieves the next token from the input string.
