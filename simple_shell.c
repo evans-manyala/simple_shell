@@ -1,104 +1,93 @@
 #include "main.h"
 
 /**
- * read_cmd - Function reads a command line from the user
- * Return: Line
- * */
-char *read_cmd()
-{
-	char *line = NULL;
-	size_t len = 0;
-
-	printf(PROMPT);
-	getline(&line, &len, stdin);
-
-	/* Remove the newline character at the end of the line */
-	if (line[strlen(line) - 1] == '\n')
-		line[strlen(line) - 1] = '\0';
-	return (line);
-}
-
-/**
- * execute_cmd - Function executes a command.
- * @cmd: Pointer for the commmand to be executed.
- * Return: If successful 0, otherwise -1
+ * main: main function for our shell program
  */
 
-int execute_cmd(char *cmd)
+int main(void)
 {
-	/*Create a child process*/
-	pid_t child_pid = fork();
-
-	if (child_pid < 0)
+	static char buffer[100];
+	while (get_func(buffer, sizeof(buffer)) >= 0)
 	{
-		/*Error forking*/
-		perror("fork");
-		return (-1);
-	}
-	else if (child_pid == 0)
-	{
-		/*Child process*/
-		/*Execute the command*/
-		execve(cmd, NULL, environ);
-		/*If we reach here, something went wrong*/
-		perror("execve");
-		exit(1);
-	}
-	else
-	{
-		/*Parent process*/
-		/* Wait for the child process to finish executing */
-		int status;
-
-		waitpid(child_pid, &status, 0);
-
-		/* Check the exit status of the child process */
-		if (status != 0)
+		/*Implementation of Change directory command */
+		if (buffer[0] == 'c' && buffer[1] == 'd')
 		{
-			/* Error executing the command */
-			printf("Error executing command: %s\n", cmd);
-			return (-1);
+			char *path = NULL;
+			if (strlen(buffer) > 2)
+				path = buffer + 3; /*If there is an argument after "cd", set path accordingly */
+			changedirectory(path);
 		}
+		else if (buffer[0] == 'e' && buffer[1] == 'x' && buffer[2] == 'i' && buffer[3] == 't')
+		{
+			char *exargs = NULL;
+			if (strlen(buffer) > 4)
+				exargs = buffer + 5;
+			myexit(exargs);
+		}
+		else if (buffer[0] == 'e' && buffer[1] == 'n' && buffer[2] == 'v')
+			envir();
+		else if (fork_func() == 0)
+			run_func(parse_func(buffer));
+		wait(0);
 	}
-	return (0);
-}
-
-/**
- * handle_eof - Checks for and handles  the end of file condition
- */
-
-void handle_eof(void)
-{
-	printf("\n");
 	exit(0);
 }
 
+/* Helper functions */
+
 /**
- * main - Main function in the shell script
- * Return: 0 if successful.
+ * panicerrorerror - Prints out an error message and terminate the process
+ * @s: The error to print out
+ * Return: Returns nothing(void)
  */
-int main(void)
+void panicerror(char *s)
 {
-	/* Handle the end of file condition */
-	signal(SIGINT, handle_eof);
+	printf("%s\n", s);
+	exit(1);
+}
 
-	/* Infinite loop */
-	while (1)
+/**
+ * fork_function - Wrapper for the fork system call
+ * Return: process id
+ */
+int fork_func(void)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == -1)
 	{
-		/* Read a command line from the user */
-		char *cmd = read_cmd();
-
-		/* If the command is empty, skip it */
-		if (strlen(cmd) == 0)
-		{
-			continue;
-		}
-
-		/* Execute the command */
-		execute_cmd(cmd);
-
-		/* Free the command line */
-		free(cmd);
+		panicerror("fork");
 	}
+	return (pid);
+}
+
+/**
+ * get_func - Prints the shell prompt and used in the main control loop
+ * @buffer: The buffer character array cintaining the input
+ * @nbuffer: Number of characters in the buffer array
+ * Return : Returns 0 on Success
+ */
+
+int get_func(char *buffer, int nbuffer)
+{
+	printf("$ "); /* Prints the prompt */
+	memset(buffer, 0, nbuffer);
+	/* Read the input line Or work on getline function later */
+	fgets(buffer, nbuffer, stdin);
+
+	size_t len = strlen(buffer);
+	if (len > 0 && buffer[len - 1] == '\n')
+	{
+		buffer[len - 1] = '\0'; /* Remove the newline character */
+	}
+
+	if (buffer[0] == '#') /* Handle the comments */
+	{
+		buffer[0] = '\0'; /* Set the entire line to an empty string */
+	}
+
+	if (buffer[0] == 0) /*End of file*/
+		return (-1);
 	return (0);
 }
