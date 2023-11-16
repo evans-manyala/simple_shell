@@ -37,6 +37,7 @@ void forkNwait(struct func *func)
 
 void searchNexecute_cmd(char *command_name, char **argv)
 {
+	int command_number = 0;
 	char *path_env = getenv("PATH");
 	char *path = strdup(path_env);
 	char *dir = strtok(path, ":");
@@ -55,8 +56,8 @@ void searchNexecute_cmd(char *command_name, char **argv)
 		dir = strtok(NULL, ":");
 	}
 
-	printf("Command not found: %s\n", command_name);
-	exit(1);
+	fprintf(stderr, "sh: %d: %s: not found\n", ++command_number, command_name);
+	exit(127); /*Command not found*/
 }
 
 /**
