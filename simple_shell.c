@@ -79,7 +79,7 @@ int fork_func(void)
 int get_func(char *buffer, int nbuffer)
 {
 	size_t len;
-	
+
 	printf("$ ");
 	memset(buffer, 0, nbuffer);
 
