@@ -41,7 +41,7 @@ int main(void)
 /* Helper functions */
 
 /**
- * panicerror - Prints out an error message and terminate the process
+ * panicerror - Prints out an error message and terminates the process
  * @s: The error to print out
  * Return: Returns nothing(void)
  */
@@ -71,7 +71,7 @@ int fork_func(void)
 
 /**
  * get_func - Prints the shell prompt and used in the main control loop
- * @buffer: The buffer character array cintaining the input
+ * @buffer: The buffer character array containing the input
  * @nbuffer: Number of characters in the buffer array
  * Return: Returns 0 on Success
  */
