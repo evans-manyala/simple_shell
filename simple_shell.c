@@ -78,12 +78,14 @@ int fork_func(void)
 
 int get_func(char *buffer, int nbuffer)
 {
+	size_t len;
+	
 	printf("$ ");
 	memset(buffer, 0, nbuffer);
 
 	fgets(buffer, nbuffer, stdin);
 
-	size_t len = strlen(buffer);
+	len = strlen(buffer);
 
 	if (len > 0 && buffer[len - 1] == '\n')
 		buffer[len - 1] = '\0';
