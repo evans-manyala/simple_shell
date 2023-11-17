@@ -56,7 +56,7 @@ void searchNexecute_cmd(char *command_name, char **argv)
 		dir = strtok(NULL, ":");
 	}
 
-	fprintf(stderr, "sh: %d: %s: not found\n", ++command_number, command_name);
+	fprintf(stdout, "sh: %d: %s: not found\n", ++command_number, command_name);
 	exit(127); /*Command not found*/
 }
 
