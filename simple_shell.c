@@ -80,7 +80,7 @@ int get_func(char *buffer, int nbuffer)
 {
 	size_t len;
 
-	write(0, "$ ", 0);
+	write(0, "$ ", 2);
 	memset(buffer, 0, nbuffer);
 
 	fgets(buffer, nbuffer, stdin);
