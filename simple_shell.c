@@ -88,10 +88,7 @@ int get_func(char *buffer, int nbuffer)
 	len = strlen(buffer);
 
 	if (len > 0 && buffer[len - 1] == '\n')
-	{
 		buffer[len - 1] = '\0';
-		len--;
-	}
 	if (buffer[0] == '#')
 		buffer[0] = '\0';
 	if (buffer[0] == 0)
